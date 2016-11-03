@@ -13,12 +13,36 @@ import java.util.List;
 2.3. в качестве первого параметра в removeNote передай имя нити - метод getName()
 */
 
-public class Solution {
-    public static void main(String[] args) {
+public class Solution
+    {
+    public static void main(String[] args) throws InterruptedException{
+        NoteThread thread = new NoteThread();
+        thread.start();
+        thread.join();
+
+        for (String line : Note.notes){
+            System.out.println(line);
+
+        }
 
     }
 
-    public static class Note {
+    public static class NoteThread extends Thread
+        {
+
+        @Override
+        public void run() {
+            for (int i = 0; i < 999; i++) {
+                String name = getName() + "-Note" + i;
+                Note.addNote(name);
+            }
+            Note.removeNote(getName());
+        }
+        }
+
+
+    public static class Note
+        {
 
         public static final List<String> notes = new ArrayList<String>();
 
@@ -34,5 +58,5 @@ public class Solution {
                 System.out.println("Нить [" + threadName + "] удалила чужую заметку [" + note + "]");
             }
         }
+        }
     }
-}
