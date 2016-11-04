@@ -24,7 +24,6 @@ public class Restaurant {
         waiter.start();
         cook.start();
 
-
         Thread.sleep(2000);
         cookTarget.continueWorking = false;
         Thread.sleep(500);
