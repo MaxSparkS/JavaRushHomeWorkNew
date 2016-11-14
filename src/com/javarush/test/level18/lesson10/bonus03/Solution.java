@@ -48,25 +48,25 @@ public class Solution {
 //            int quantity;
 //        }
         if (args.length==5 && args[0].equals("-u")){
-//            try{
+            try{
                 int id = Integer.parseInt(args[1]);
                 String productName = args[2];
                 double price = Double.parseDouble(args[3]);
                 int quantity = Integer.parseInt(args[4]);
                 for (String s : list){
-                    int id1 = Integer.parseInt(s.substring(0,8).replace(" ", ""));
-                    System.out.println(s.substring(0,8).replace(" ",""));
-                    String name = s.substring(8,38);
-                    System.out.println(name);
-//                    double price1 = Double.parseDouble(s.substring(38,46).replaceAll(" ", ""));
-                    System.out.println(s.substring(38,46).replaceAll(" ", ""));
-//                    int quantity1 = Integer.parseInt(s.substring(46));
+                    String id1 = s.substring(0,8);
+                    System.out.println(id1.length());
+                    String name1  = s.substring(8,38);
+                    System.out.println(name1.length());
+                    String price1  = s.substring(38,46);
+                    System.out.println(price1.length());
+                    String quantity1 = s.substring(46);
+                    System.out.println(quantity1.length());
 
-//                    System.out.println(id1+name+price1+quantity1);
                 }
-//            }catch (Exception e){
-//                System.out.println("Exception");
-//            }
+            }catch (Exception e){
+                System.out.println("Exception");
+            }
         }
         else if (args.length==2 && args[0].equals("-d")){
             try{
