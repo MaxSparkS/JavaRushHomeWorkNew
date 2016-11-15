@@ -13,65 +13,98 @@ price - цена, 8 символов
 quantity - количество, 4 символа
 -u  - обновляет данные товара с заданным id
 -d  - производит физическое удаление товара с заданным id (все данные, которые относятся к переданному id)
-
 В файле данные хранятся в следующей последовательности (без разделяющих пробелов):
 id productName price quantity
 Данные дополнены пробелами до их длины
-
 Пример:
 19846   Шорты пляжные синие           159.00  12
 198478  Шорты пляжные черные с рисунко173.00  17
 19847983Куртка для сноубордистов, разм10173.991234
 */
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.Buffer;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Solution {
-    public static void main(String[] args) throws IOException{
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String fileName = reader.readLine();
-        BufferedReader file = new BufferedReader(new FileReader(fileName));
-        ArrayList<String> list = new ArrayList<>();
-        String line;
-        while ((line=file.readLine())!=null){
-            list.add(line);
-        }
-//        for (String s : list){
-//            int id;
-//            String productName;
-//            double price;
-//            int quantity;
-//        }
-        if (args.length==5 && args[0].equals("-u")){
-            try{
-                int id = Integer.parseInt(args[1]);
-                String productName = args[2];
-                double price = Double.parseDouble(args[3]);
-                int quantity = Integer.parseInt(args[4]);
-                for (String s : list){
-                    String id1 = s.substring(0,8);
-                    System.out.println(id1.length());
-                    String name1  = s.substring(8,38);
-                    System.out.println(name1.length());
-                    String price1  = s.substring(38,46);
-                    System.out.println(price1.length());
-                    String quantity1 = s.substring(46);
-                    System.out.println(quantity1.length());
+public static void main(String[] args) throws IOException {
+    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    String fileName = bufferedReader.readLine();
+    bufferedReader.close();
+    String productName = "";
 
-                }
-            }catch (Exception e){
-                System.out.println("Exception");
-            }
+    ArrayList<String> list = getStringList(fileName);
+    ArrayList<Long> idList = getIdList(fileName);
+    PrintWriter printWriter;
+    int index = idList.indexOf(Long.parseLong(args[1]));
+
+    if (args[0].equals("-u"))
+    {
+        for (int i = 2; i < args.length - 2; i++)
+            productName = productName + args[i] + " ";
+
+        String trueProductName = setSpaces(productName, 30);
+        String truePrice = setSpaces(args[args.length - 2], 8);
+        String trueQuantity = setSpaces(args[args.length - 1], 4);
+        String id = setSpaces(args[1], 8);
+        String ourString = id + trueProductName + truePrice + trueQuantity;
+
+        if (!idList.contains(Long.parseLong(args[1])))
+        {
+            printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName, true)));
+            printWriter.println(ourString);
+        } else {
+            list.set(index, ourString);
+            printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName)));
+            for (String aString : list)
+                printWriter.println(aString);
         }
-        else if (args.length==2 && args[0].equals("-d")){
-            try{
-                int id = Integer.parseInt(args[1]);
-            }catch (Exception e){}
-        }
+        printWriter.close();
+    } else if (args[0].equals("-d")) {
+        list.remove(index);
+        printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName)));
+        for (String aString : list)
+            printWriter.println(aString);
+        printWriter.close();
     }
+}
+
+public static ArrayList<String> getStringList (String fileName) throws IOException {
+    ArrayList<String> allList = new ArrayList<String>();
+    BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+    String line;
+    while ((line=bufferedReader.readLine()) != null) {
+        allList.add(line);
+    }
+    bufferedReader.close();
+    return allList;
+}
+
+public static ArrayList<Long> getIdList (String fileName) throws IOException {
+    ArrayList<Long> allIds = new ArrayList<Long>();
+    BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+    String line;
+    Long currentId;
+    while ((line=bufferedReader.readLine()) != null) {
+        line = line.substring(0, 8).replaceAll("\\s", "");
+        currentId = Long.parseLong(line);
+        allIds.add(currentId);
+    }
+    bufferedReader.close();
+    return allIds;
+}
+
+
+public static String setSpaces (String previousName, int count) {
+    String trueName;
+    if (previousName.length()>count)
+        trueName = previousName.substring(0, count);
+    else
+    {
+        String s="";
+        for (int i = 0; i < (count  - previousName.length()); i++)
+            s = s+ " ";
+        trueName = previousName+s;
+    }
+    return trueName;
+}
 }
