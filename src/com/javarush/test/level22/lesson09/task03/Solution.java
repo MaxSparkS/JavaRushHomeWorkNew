@@ -34,6 +34,7 @@ public class Solution
         while ((line = file.readLine()) != null) {
             arr = line.split(" ");
         }
+        file.close();
         Arrays.sort(arr);
         for (String s : arr) {
             list.add(s);
