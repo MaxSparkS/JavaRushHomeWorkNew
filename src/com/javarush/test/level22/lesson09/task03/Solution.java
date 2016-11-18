@@ -1,9 +1,11 @@
 package com.javarush.test.level22.lesson09.task03;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Arrays;
 
 /* Составить цепочку слов
 В методе main считайте с консоли имя файла, который содержит слова, разделенные пробелом.
@@ -20,36 +22,39 @@ import java.util.List;
 Результат:
 Амстердам Мельбурн Нью-Йорк Киев Вена
 */
-public class Solution {
-    public static void main(String[] args) throws IOException{
+public class Solution
+    {
+    public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        BufferedReader file=new BufferedReader(new FileReader(reader.readLine()));
+        BufferedReader file = new BufferedReader(new FileReader(reader.readLine()));
+        reader.close();
+        String[] arr = new String[file.read()];
         ArrayList<String> list = new ArrayList<>();
-        String[] arr;
-        while (file.ready()){
-            String line = file.readLine();
+        String line;
+        while ((line = file.readLine()) != null) {
             arr = line.split(" ");
-            Collections.addAll(list, arr);
+        }
+        Arrays.sort(arr);
+        for (String s : arr) {
+            list.add(s);
         }
         StringBuilder result = getLine(list);
         System.out.println(result.toString());
     }
-    public static StringBuilder getLine(ArrayList<String> list) {
-        StringBuilder builder = new StringBuilder();
-        Collections.sort(list);
-        builder.append(list.get(0));
-        int l = builder.length();
-        String s2 = builder.substring(l-1);
-        System.out.println(s2);
 
-        for (String s:list){
-                String s1 = s.substring(0,1);
-                System.out.println(s1);
-                if (s2.equalsIgnoreCase(s1)){
-                    builder.append(s);
-                    list.remove(s);
+    public static StringBuilder getLine(ArrayList<String> words) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(words.get(0));
+        words.remove(0);
+        while (!words.isEmpty()) {
+            for (String s : words) {
+                if (stringBuilder.substring(stringBuilder.length() - 1).equals(s.substring(0, 1).toLowerCase())) {
+                    stringBuilder.append(" " + s);
+                    words.remove(s);
+                    break;
                 }
+            }
         }
-        return builder;
+        return stringBuilder;
     }
-}
+    }

@@ -30,17 +30,6 @@ same - (1, 1) - (4, 1)
 
     public static List<Word> detectAllWords(int[][] crossword, String... words) {
 
-        for (String word:words){
-            char[] chars = word.toCharArray();
-            char start = chars[0];
-            char end = chars[chars.length-1];
-            for (int i = 0; i < crossword.length; i++) {
-                for (int j = 0; j < crossword.length; j++) {
-
-
-                }
-            }
-        }
         return null;
     }
 
