@@ -26,7 +26,23 @@ text2>text1</tag>
 text1, text2 могут быть пустыми
 */
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class Solution {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader file = new BufferedReader(new FileReader(reader.readLine()));
+        reader.close();
+        StringBuilder builder = new StringBuilder();
+        while (file.ready()){
+            builder.append(file.readLine());
+        }
+        String openTag = "<".concat(args[0]);
+        String closeTag = "</".concat(args[0]);
+        System.out.println(builder);
+        System.out.println(openTag+" "+closeTag);
     }
 }

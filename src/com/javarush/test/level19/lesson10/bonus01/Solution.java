@@ -1,5 +1,6 @@
 package com.javarush.test.level19.lesson10.bonus01;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,17 @@ file1:         file2:             результат:(lines)
 public class Solution {
     public static List<LineItem> lines = new ArrayList<LineItem>();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader firstFile = new BufferedReader(new FileReader(reader.readLine())),secondFile = new BufferedReader(new FileReader(reader.readLine()));
+        reader.close();
+        ArrayList<String> list1 = new ArrayList<>(), list2 = new ArrayList<>();
+        while (firstFile.ready()){list1.add(firstFile.readLine());}
+        while (secondFile.ready()){list2.add(secondFile.readLine());}
+
+
+
+
     }
 
 

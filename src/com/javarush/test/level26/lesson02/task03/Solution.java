@@ -10,4 +10,5 @@ package com.javarush.test.level26.lesson02.task03;
 В конструктор передается как минимум один компаратор
 */
 public class Solution {
+
 }
